@@ -37,7 +37,18 @@ class MainScreen {
             XCTFail("Invalid amount format: No decimal point found")
             return ""
         }
-        return String(amount[separatorIndex])
+        
+        // Ensure that the separator is found just before the decimals not at a separator between the amount digits
+        let separatorIndexAsInt = amount.distance(from: amount.startIndex, to: separatorIndex)
+        let amountArrayCount = Array(amount).count
+        let distance = amountArrayCount - separatorIndexAsInt
+        if(distance == 3){
+            return String(amount[separatorIndex])
+        }
+        else {
+            XCTFail("Invalid amount format: No decimal point found")
+            return ""
+        }
     }
     
     func getDecimalCount() -> Int {
